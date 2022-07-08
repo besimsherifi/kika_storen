@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kika_storen/screens/main_screen.dart';
+import 'package:kika_storen/utils/constants.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class AuthScreen extends StatelessWidget {
                   Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 100),
+                        padding: EdgeInsets.symmetric(horizontal: 65),
                         child:
                             Image(image: AssetImage('assets/images/logo.png')),
                       ),
@@ -26,11 +28,11 @@ class AuthScreen extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'Willkomen',
-                        style: GoogleFonts.anekLatin(
-                          textStyle: const TextStyle(fontSize: 22),
-                          color: const Color(0xff164276),
-                        ),
+                        'Willkommen',
+                        style: GoogleFonts.robotoSlab(
+                            textStyle: const TextStyle(fontSize: 20),
+                            color: const Color(0xff164276),
+                            fontWeight: FontWeight.w400),
                       ),
                       const SizedBox(
                         height: 30,
@@ -79,15 +81,22 @@ class AuthScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
-                          padding: const EdgeInsets.all(20),
+                          width: double.infinity,
                           decoration: BoxDecoration(
-                              color: const Color(0xff0991B5),
+                              color: kKikaBlueColor,
                               borderRadius: BorderRadius.circular(12)),
-                          child: const Center(
-                              child: Text(
-                            'Anmelden',
-                            style: TextStyle(color: Colors.white),
-                          )),
+                          child: TextButton(
+                            onPressed: () => Navigator.of(context)
+                                .pushNamed(MainScreen.routeName),
+                            child: Text(
+                              'Anmelden',
+                              style: GoogleFonts.robotoSlab(
+                                textStyle: const TextStyle(
+                                  color: kKikaBlueTextColor,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       )
                     ],
