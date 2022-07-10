@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1093455278126",
+    "project_id": "kika-storen",
+    "storage_bucket": "kika-storen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093455278126:android:4e91e781212eab5eb62fbf",
+        "android_client_info": {
+          "package_name": "com.example.kika_storen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093455278126-uciobm6pp3vstq712t0fo6ajpkpku5ln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_qng3lv9FfdMPUBI-laKT5xKrbnCF6no"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093455278126-uciobm6pp3vstq712t0fo6ajpkpku5ln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
