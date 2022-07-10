@@ -5,7 +5,15 @@ class AuthenticationService {
 
   AuthenticationService(this._firebaseAuth);
 
-  Future singIn(email, password) async {}
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  Future singUp(email, password) async {}
+  Future<String?> singIn(email, password) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return 'Singed in';
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
 }
