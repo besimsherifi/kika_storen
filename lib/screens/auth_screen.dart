@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/utils/constants.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth_service.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  AuthScreen({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +50,11 @@ class AuthScreen extends StatelessWidget {
                               color: Colors.grey[100],
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 20.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: emailController,
+                              decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   fillColor: Colors.white,
                                   hintText: 'username'),
@@ -65,11 +72,12 @@ class AuthScreen extends StatelessWidget {
                               color: Colors.grey[100],
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.circular(12)),
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 20.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
                             child: TextField(
+                              controller: passwordController,
                               obscureText: true,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   fillColor: Colors.white,
                                   hintText: 'password'),
@@ -86,8 +94,12 @@ class AuthScreen extends StatelessWidget {
                               color: kKikaBlueColor,
                               borderRadius: BorderRadius.circular(12)),
                           child: TextButton(
-                            onPressed: () => Navigator.of(context)
-                                .pushNamed(MainScreen.routeName),
+                            onPressed: () {
+                              context.read<AuthenticationService>().singIn(
+                                    emailController.text.trim(),
+                                    passwordController.text.trim(),
+                                  );
+                            },
                             child: Text(
                               'Anmelden',
                               style: GoogleFonts.robotoSlab(
