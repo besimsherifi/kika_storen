@@ -19,8 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final firebaseUser = context.watch<User>();
-
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
@@ -49,7 +47,6 @@ class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
-
     if (firebaseUser != null) {
       return MainScreen();
     }

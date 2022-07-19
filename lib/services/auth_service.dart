@@ -16,4 +16,8 @@ class AuthenticationService {
       return e.message;
     }
   }
+
+  Future<void> singOut() async {
+    await _firebaseAuth.signOut();
+  }
 }
