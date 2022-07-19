@@ -19,8 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
-
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
@@ -36,11 +34,22 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Kika Storen',
         theme: ThemeData(),
-        home: firebaseUser != null ? AuthScreen() : MainScreen(),
+        home: AuthenticationWrapper(),
         routes: {
           MainScreen.routeName: (context) => MainScreen(),
         },
       ),
     );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      return MainScreen();
+    }
+    return AuthScreen();
   }
 }
