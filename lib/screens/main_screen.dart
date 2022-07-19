@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kika_storen/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
@@ -12,7 +12,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kika Storen'),
+        title: const Text('Kika Storen'),
       ),
       body: SafeArea(
         child: Container(
@@ -56,7 +56,7 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,7 +65,7 @@ class MenuCard extends StatelessWidget {
               child: Stack(children: [icon]),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(text)
         ],
       ),
