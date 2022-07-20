@@ -4,7 +4,7 @@ import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/utils/constants.dart';
 import 'package:provider/provider.dart';
 
-import '../services/auth_service.dart';
+import '../services/authentication_service.dart';
 
 class AuthScreen extends StatelessWidget {
   AuthScreen({Key? key}) : super(key: key);
@@ -94,11 +94,14 @@ class AuthScreen extends StatelessWidget {
                               color: kKikaBlueColor,
                               borderRadius: BorderRadius.circular(12)),
                           child: TextButton(
-                            onPressed: () {
-                              context.read<AuthenticationService>().singIn(
+                            onPressed: () async {
+                              var res = await context
+                                  .read<AuthenticationService>()
+                                  .singIn(
                                     emailController.text.trim(),
                                     passwordController.text.trim(),
                                   );
+                              print(res);
                             },
                             child: Text(
                               'Anmelden',

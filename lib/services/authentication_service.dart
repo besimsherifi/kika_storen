@@ -13,6 +13,7 @@ class AuthenticationService {
           email: email, password: password);
       return 'Singed in';
     } on FirebaseAuthException catch (e) {
+      // print(e.message);
       return e.message;
     }
   }

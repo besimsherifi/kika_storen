@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kika_storen/services/auth_service.dart';
+import 'package:kika_storen/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
