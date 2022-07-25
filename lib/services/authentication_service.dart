@@ -14,8 +14,6 @@ class AuthenticationService {
       return 'Singed in';
     } on FirebaseAuthException catch (e) {
       final String message;
-      print(e.code);
-      print(e.message);
       switch (e.code) {
         case 'user-not-found':
           message = 'Login fehlgeschlagen, Benutzer unbekannt !';
