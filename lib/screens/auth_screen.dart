@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/utils/constants.dart';
+import 'package:kika_storen/widgets/auth_error_msg.dart';
+import 'package:kika_storen/widgets/auth_input.dart';
 import 'package:provider/provider.dart';
 
 import '../services/authentication_service.dart';
 
-class AuthScreen extends StatelessWidget {
-  AuthScreen({Key? key}) : super(key: key);
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  var message = '';
 
   @override
   Widget build(BuildContext context) {
@@ -43,49 +51,23 @@ class AuthScreen extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            child: TextField(
-                              controller: emailController,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  fillColor: Colors.white,
-                                  hintText: 'username'),
-                            ),
-                          ),
-                        ),
-                      ),
+                      AuthInput(
+                          passwordController: emailController,
+                          obscure: false,
+                          hint: 'e-mail'),
                       const SizedBox(
                         height: 10,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            child: TextField(
-                              controller: passwordController,
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  fillColor: Colors.white,
-                                  hintText: 'password'),
-                            ),
-                          ),
-                        ),
+                      AuthInput(
+                        passwordController: passwordController,
+                        obscure: true,
+                        hint: 'kenwort',
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      if (message != '') AuthErrorMessage(message: message),
+                      const SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
@@ -102,6 +84,11 @@ class AuthScreen extends StatelessWidget {
                                     passwordController.text.trim(),
                                   );
                               print(res);
+                              setState(() {
+                                if (res != null) {
+                                  message = res;
+                                }
+                              });
                             },
                             child: Text(
                               'Anmelden',
