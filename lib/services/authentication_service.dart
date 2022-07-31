@@ -14,23 +14,24 @@ class AuthenticationService {
       return 'Singed in';
     } on FirebaseAuthException catch (e) {
       final String message;
-      print(e.code);
-      print(e.message);
       switch (e.code) {
         case 'user-not-found':
-          message = 'Login fehlgeschlagen, Benutzer unbekannt';
+          message = 'Login fehlgeschlagen, Benutzer unbekannt !';
+          break;
+        case 'invalid-email':
+          message = 'Die E-Mail-Adresse ist schlecht formatiert !';
           break;
         case 'wrong-password':
-          message = 'Das Passwort ist ungültig';
+          message = 'Das Passwort ist ungültig !';
           break;
         case 'network-request-failed':
-          message = 'Login fehlgeschlagen, Netzwerkfehler';
+          message = 'Login fehlgeschlagen, Netzwerkfehler !';
           break;
         case 'too-many-requests':
-          message = 'Zu vielen fehlgeschlagenen Anmeldeversuchen';
+          message = 'Zu vielen fehlgeschlagenen Anmeldeversuchen !';
           break;
         default:
-          message = 'Error Login fehlgeschlagen';
+          message = 'Error Login fehlgeschlagen !';
       }
       return message;
     }
