@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kika_storen/models/menu_items.dart';
 import 'package:kika_storen/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,15 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   static const routeName = '/main-screen';
+
+  // final List<City> _allCities = City.allCities();
+  final List menuItems = MenuItems.menuItems();
+  Map test = {
+    'name': 'Home',
+    'value': AssetImage('assets/images/home.png'),
+    'name': 'Settings',
+    'value': AssetImage('assets/images/setting.png'),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +33,24 @@ class MainScreen extends StatelessWidget {
             children: [
               RaisedButton(
                 onPressed: () {
-                  context.read<AuthenticationService>().singOut();
+                  // context.read<AuthenticationService>().singOut();
+                  if (menuItems != null) {
+                    for (var i = 0; i < menuItems.length; i++) {
+                      print(menuItems[i]);
+                    }
+                  }
                 },
                 child: Text('LogOut'),
               ),
-              MenuCard(Icon(Icons.home), 'Home'),
-              MenuCard(Icon(Icons.settings), 'Settings'),
-              MenuCard(Icon(Icons.lock_clock), 'Clock'),
-              MenuCard(Icon(Icons.calendar_month), 'Calendar'),
-              MenuCard(Icon(Icons.done_all), 'Done All'),
-              MenuCard(Icon(Icons.done), 'Done'),
+              // MenuCard(Icon(Icons.home), 'Home'),
+              // MenuCard(Icon(Icons.settings), 'Settings'),
+              // MenuCard(Icon(Icons.lock_clock), 'Clock'),
+              // MenuCard(Icon(Icons.calendar_month), 'Calendar'),
+              // MenuCard(Icon(Icons.done_all), 'Done All'),
+              // MenuCard(Icon(Icons.done), 'Done'),
+              test.map(
+                (key, value) => MenuCard(value, key),
+              )
             ],
           ),
         ),
@@ -50,7 +68,7 @@ class MainScreen extends StatelessWidget {
 class MenuCard extends StatelessWidget {
   MenuCard(this.icon, this.text);
 
-  final Icon icon;
+  final Image icon;
   final String text;
 
   @override
