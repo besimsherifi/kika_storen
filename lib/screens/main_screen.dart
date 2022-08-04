@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:kika_storen/models/menu_items.dart';
-import 'package:kika_storen/services/authentication_service.dart';
-import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
+import '../models/menu_items.dart';
+
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   static const routeName = '/main-screen';
 
-  // final List<City> _allCities = City.allCities();
   final List menuItems = MenuItems.menuItems();
-  Map test = {
-    'name': 'Home',
-    'value': AssetImage('assets/images/home.png'),
-    'name': 'Settings',
-    'value': AssetImage('assets/images/setting.png'),
-  };
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,28 +22,24 @@ class MainScreen extends StatelessWidget {
           child: GridView(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2),
-            children: [
-              RaisedButton(
-                onPressed: () {
-                  // context.read<AuthenticationService>().singOut();
-                  if (menuItems != null) {
-                    for (var i = 0; i < menuItems.length; i++) {
-                      print(menuItems[i]);
-                    }
-                  }
-                },
-                child: Text('LogOut'),
-              ),
-              // MenuCard(Icon(Icons.home), 'Home'),
-              // MenuCard(Icon(Icons.settings), 'Settings'),
-              // MenuCard(Icon(Icons.lock_clock), 'Clock'),
-              // MenuCard(Icon(Icons.calendar_month), 'Calendar'),
-              // MenuCard(Icon(Icons.done_all), 'Done All'),
-              // MenuCard(Icon(Icons.done), 'Done'),
-              test.map(
-                (key, value) => MenuCard(value, key),
-              )
-            ],
+            children: menuItems
+                .map(
+                  (menuItem) =>
+                      MenuCard(icon: menuItem.image, text: menuItem.text),
+                )
+                .toList()
+            // RaisedButton(
+            //   onPressed: () async {
+            //     // context.read<AuthenticationService>().singOut();
+            //     if (menuItems != null) {
+            //       for (var i = 0; i < menuItems.length; i++) {
+            //         print(menuItems[i].name);
+            //       }
+            //     }
+            //   },
+            //   child: Text('LogOut'),
+            // ),
+            ,
           ),
         ),
       ),
@@ -66,7 +54,8 @@ class MainScreen extends StatelessWidget {
 }
 
 class MenuCard extends StatelessWidget {
-  MenuCard(this.icon, this.text);
+  const MenuCard({Key? key, required this.icon, required this.text})
+      : super(key: key);
 
   final Image icon;
   final String text;
@@ -79,9 +68,7 @@ class MenuCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-              child: Stack(children: [icon]),
-            ),
+            child: Stack(children: [icon]),
           ),
           const SizedBox(height: 10),
           Text(text)
