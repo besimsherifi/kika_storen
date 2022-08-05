@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kika_storen/utils/constants.dart';
 
 class MenuItems {
   final String text;
@@ -11,27 +12,56 @@ class MenuItems {
 
     menu.add(
       MenuItems(
-        text: "Home",
+        text: "Zeiterfassung",
         image: const Image(
-          image: AssetImage('assets/images/home.png'),
+          height: kMainScreenIconsSize,
+          width: kMainScreenIconsSize,
+          image: AssetImage('assets/images/clock.png'),
+        ),
+      ),
+    );
+    menu.add(
+      MenuItems(
+        text: "Termine",
+        image: const Image(
+          width: kMainScreenIconsSize,
+          height: kMainScreenIconsSize,
+          image: AssetImage('assets/images/calendar.png'),
+        ),
+      ),
+    );
+    menu.add(
+      MenuItems(
+        text: "Aufgaben",
+        image: const Image(
+          width: kMainScreenIconsSize,
+          height: kMainScreenIconsSize,
+          image: AssetImage('assets/images/tasks.png'),
+        ),
+      ),
+    );
+    menu.add(
+      MenuItems(
+        text: "Projekten",
+        image: const Image(
+          width: kMainScreenIconsSize,
+          height: kMainScreenIconsSize,
+          image: AssetImage('assets/images/projects.png'),
         ),
       ),
     );
     menu.add(MenuItems(
-        text: "Settings",
-        image: const Image(image: AssetImage('assets/images/settings.png'))));
+        text: "Kontakte",
+        image: const Image(
+            width: kMainScreenIconsSize,
+            height: kMainScreenIconsSize,
+            image: AssetImage('assets/images/contact.png'))));
     menu.add(MenuItems(
-        text: "Home",
-        image: const Image(image: AssetImage('assets/images/home.png'))));
-    menu.add(MenuItems(
-        text: "Settings",
-        image: const Image(image: AssetImage('assets/images/settings.png'))));
-    menu.add(MenuItems(
-        text: "Home",
-        image: const Image(image: AssetImage('assets/images/home.png'))));
-    menu.add(MenuItems(
-        text: "Settings",
-        image: const Image(image: AssetImage('assets/images/settings.png'))));
+        text: "Formularen",
+        image: const Image(
+            width: kMainScreenIconsSize,
+            height: kMainScreenIconsSize,
+            image: AssetImage('assets/images/formular.png'))));
 
     return menu;
   }
