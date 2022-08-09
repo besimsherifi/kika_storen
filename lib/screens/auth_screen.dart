@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kika_storen/utils/constants.dart';
+import 'package:kika_storen/utils/helper_widgets.dart';
 import 'package:kika_storen/widgets/auth_error_msg.dart';
 import 'package:kika_storen/widgets/auth_input.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      // backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -38,9 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         child:
                             Image(image: AssetImage('assets/images/logo.png')),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      addVerticalSpace(30),
                       Text(
                         'Willkommen',
                         style: GoogleFonts.robotoSlab(
@@ -48,26 +47,20 @@ class _AuthScreenState extends State<AuthScreen> {
                             color: const Color(0xff164276),
                             fontWeight: FontWeight.w400),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      addVerticalSpace(30),
                       AuthInput(
                           passwordController: emailController,
                           obscure: false,
                           hint: 'e-mail'),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      addVerticalSpace(10),
                       AuthInput(
                         passwordController: passwordController,
                         obscure: true,
                         hint: 'kenwort',
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      addVerticalSpace(15),
                       if (message != '') AuthErrorMessage(message: message),
-                      const SizedBox(height: 15),
+                      addVerticalSpace(15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
