@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kika_storen/utils/helper_widgets.dart';
 
 import '../models/menu_items.dart';
+import '../utils/config.dart';
+import '../widgets/menu_card.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -15,63 +18,30 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kika Storen'),
       ),
+      drawer: Drawer(
+          child: Column(
+        children: [
+          addVerticalSpace(90),
+          TextButton(
+              onPressed: () {
+                currentTheme.switchTheme();
+              },
+              child: Text('Toggle theme'))
+        ],
+      )),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsetsDirectional.only(top: 20),
           child: GridView(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            children: menuItems
-                .map(
-                  (menuItem) =>
-                      MenuCard(icon: menuItem.image, text: menuItem.text),
-                )
-                .toList()
-            // RaisedButton(
-            //   onPressed: () async {
-            //     // context.read<AuthenticationService>().singOut();
-            //     if (menuItems != null) {
-            //       for (var i = 0; i < menuItems.length; i++) {
-            //         print(menuItems[i].name);
-            //       }
-            //     }
-            //   },
-            //   child: Text('LogOut'),
-            // ),
-            ,
-          ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+              children: menuItems
+                  .map(
+                    (menuItem) =>
+                        MenuCard(icon: menuItem.image, text: menuItem.text),
+                  )
+                  .toList()),
         ),
-      ),
-    );
-
-    // return CupertinoPageScaffold(
-    //   child: Center(
-    //     child: Text('Wilkomen'),
-    //   ),
-    // );
-  }
-}
-
-class MenuCard extends StatelessWidget {
-  const MenuCard({Key? key, required this.icon, required this.text})
-      : super(key: key);
-
-  final Image icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Stack(children: [icon]),
-          ),
-          const SizedBox(height: 10),
-          Text(text)
-        ],
       ),
     );
   }
