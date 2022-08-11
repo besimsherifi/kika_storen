@@ -1,69 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:kika_storen/utils/constants.dart';
 
 class MenuItems {
   final String text;
-  final Image image;
+  final Icon image;
 
   MenuItems({required this.text, required this.image});
 
   static List<dynamic> menuItems() {
     var menu = [];
 
-
     menu.add(
       MenuItems(
         text: "Zeiterfassung",
-        image: const Image(
-          height: kMainScreenIconsSize,
-          width: kMainScreenIconsSize,
-          image: AssetImage('assets/images/clock.png'),
+        image: const Icon(
+          Iconsax.timer_1,
+          size: kMainScreenIconsSize,
         ),
       ),
     );
     menu.add(
       MenuItems(
         text: "Termine",
-        image: const Image(
-          width: kMainScreenIconsSize,
-          height: kMainScreenIconsSize,
-          image: AssetImage('assets/images/calendar.png'),
+        image: const Icon(
+          Iconsax.calendar_tick,
+          size: kMainScreenIconsSize,
         ),
       ),
     );
     menu.add(
       MenuItems(
         text: "Aufgaben",
-        image: const Image(
-          width: kMainScreenIconsSize,
-          height: kMainScreenIconsSize,
-          image: AssetImage('assets/images/tasks.png'),
+        image: const Icon(
+          Iconsax.task,
+          size: kMainScreenIconsSize,
         ),
       ),
     );
     menu.add(
       MenuItems(
         text: "Projekten",
-        image: const Image(
-          width: kMainScreenIconsSize,
-          height: kMainScreenIconsSize,
-          image: AssetImage('assets/images/projects.png'),
+        image: const Icon(
+          Iconsax.rulerpen,
+          size: kMainScreenIconsSize,
         ),
       ),
     );
-    menu.add(MenuItems(
+    menu.add(
+      MenuItems(
         text: "Kontakte",
-        image: const Image(
-            width: kMainScreenIconsSize,
-            height: kMainScreenIconsSize,
-            image: AssetImage('assets/images/contact.png'))));
-    menu.add(MenuItems(
+        image: const Icon(
+          Iconsax.personalcard,
+          size: kMainScreenIconsSize,
+        ),
+      ),
+    );
+    menu.add(
+      MenuItems(
         text: "Formularen",
-        image: const Image(
-            width: kMainScreenIconsSize,
-            height: kMainScreenIconsSize,
-            image: AssetImage('assets/images/formular.png'))));
-
+        image: const Icon(
+          Iconsax.document_text_1,
+          size: kMainScreenIconsSize,
+        ),
+      ),
+    );
     return menu;
   }
 }

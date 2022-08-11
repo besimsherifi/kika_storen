@@ -7,7 +7,7 @@ class MenuCard extends StatelessWidget {
   const MenuCard({Key? key, required this.icon, required this.text})
       : super(key: key);
 
-  final Image icon;
+  final Icon icon;
   final String text;
 
   @override

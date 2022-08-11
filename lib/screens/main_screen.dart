@@ -12,7 +12,6 @@ class MainScreen extends StatelessWidget {
 
   final List menuItems = MenuItems.menuItems();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +26,7 @@ class MainScreen extends StatelessWidget {
               onPressed: () {
                 currentTheme.switchTheme();
               },
-              child: Text('Toggle theme'))
+              child: currentTheme.isDark ? Text('white') : Text('black'))
         ],
       )),
       body: SafeArea(
