@@ -1,8 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kika_storen/screens/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
+import 'package:kika_storen/screens/formularen_screen.dart';
+import 'package:kika_storen/screens/kontakten_screen.dart';
 import 'package:kika_storen/screens/main_screen.dart';
+import 'package:kika_storen/screens/projekten_screen.dart';
+import 'package:kika_storen/screens/termine_screen.dart';
+import 'package:kika_storen/screens/zeiterfassung_screen.dart';
 import 'package:kika_storen/services/authentication_service.dart';
 import 'package:kika_storen/theme/theme_constants.dart';
 import 'package:kika_storen/utils/config.dart';
@@ -53,7 +59,12 @@ class _MyAppState extends State<MyApp> {
         themeMode: currentTheme.currentTheme(),
         home: AuthenticationWrapper(),
         routes: {
-          MainScreen.routeName: (context) => MainScreen(),
+          ZeiterfassungScreen.routeName: (context) => ZeiterfassungScreen(),
+          TermineScreen.routeName: (context) => TermineScreen(),
+          AufgabenScreen.routeName: (context) => AufgabenScreen(),
+          ProjektenScreen.routeName: (context) => ProjektenScreen(),
+          KontaktenScreen.routeName: (context) => KontaktenScreen(),
+          FormularenScreen.routeName: (context) => FormularenScreen(),
         },
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kika_storen/screens/zeiterfassung_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../services/authentication_service.dart';
@@ -14,7 +15,8 @@ class MenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<AuthenticationService>().singOut();
+        Navigator.of(context).pushNamed('/$text-screen');
+        // print('/$text-screen');
       },
       child: Card(
         margin: const EdgeInsets.all(15),
