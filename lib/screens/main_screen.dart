@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../models/menu_items.dart';
+import '../services/authentication_service.dart';
 import '../utils/config.dart';
 import '../widgets/menu_card.dart';
 
@@ -26,7 +29,13 @@ class MainScreen extends StatelessWidget {
               onPressed: () {
                 currentTheme.switchTheme();
               },
-              child: currentTheme.isDark ? Text('white') : Text('black'))
+              child:
+                  currentTheme.isDark ? Icon(Iconsax.sun) : Icon(Iconsax.moon)),
+          TextButton(
+              onPressed: () {
+                context.read<AuthenticationService>().singOut();
+              },
+              child: Icon(Iconsax.logout))
         ],
       )),
       body: SafeArea(
