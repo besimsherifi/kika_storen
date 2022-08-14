@@ -1,19 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:kika_storen/utils/helper_widgets.dart';
+import 'package:provider/provider.dart';
 
-class ZeiterfassungScreen extends StatelessWidget {
+import '../providers/timer_provider.dart';
+
+class ZeiterfassungScreen extends StatefulWidget {
   const ZeiterfassungScreen({Key? key}) : super(key: key);
 
   static const routeName = '/Zeiterfassung-screen';
 
   @override
+  State<ZeiterfassungScreen> createState() => _ZeiterfassungScreenState();
+}
+
+class _ZeiterfassungScreenState extends State<ZeiterfassungScreen> {
+  var timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    timer = Provider.of<TimerProvider>(context, listen: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Zeiterfassung'),
-      ),
-      body: Center(
-        child: Text('Zeiterfassung'),
-      ),
+      appBar: AppBar(),
+      body: homeScreenBody(),
     );
+  }
+
+  Widget homeScreenBody() {
+    return Container(child: Consumer<TimerProvider>(
+      builder: (context, timeprovider, widget) {
+        return Column(
+          children: [
+            SizedBox(
+              height: 25,
+            ),
+            Center(
+              child: Text(
+                '${timer.hour} : ' + '${timer.minute} : ' + '${timer.seconds} ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 40,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                (timer.startEnable)
+                    ? ElevatedButton(
+                        onPressed: timer.startTimer,
+                        child: Text('Start'),
+                      )
+                    : ElevatedButton(
+                        onPressed: null,
+                        child: Text('Start'),
+                      ),
+                (timer.stopEnable)
+                    ? ElevatedButton(
+                        onPressed: timer.stopTimer,
+                        child: Text('Stop'),
+                      )
+                    : ElevatedButton(
+                        onPressed: null,
+                        child: Text('Stop'),
+                      ),
+                (timer.continueEnable)
+                    ? ElevatedButton(
+                        onPressed: timer.continueTimer,
+                        child: Text('Continue'),
+                      )
+                    : ElevatedButton(
+                        onPressed: null,
+                        child: Text('Continue'),
+                      ),
+              ],
+            ),
+            addVerticalSpace(40),
+            CheckboxListTile(
+              title: Text("Automaticher Stop nach 8 Stunden"), //    <-- label
+              value: false,
+              onChanged: (newValue) {},
+            ),
+            CheckboxListTile(
+              title: Text(
+                  "Benachrichtigen Sie mich nach 8 Stunden"), //    <-- label
+              value: false,
+              onChanged: (newValue) {},
+            )
+          ],
+        );
+      },
+    ));
   }
 }
