@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kika_storen/providers/timer_provider.dart';
 import 'package:kika_storen/screens/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
@@ -49,6 +50,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) =>
               context.read<AuthenticationService>().authStateChanges,
           initialData: null,
+        ),
+        ChangeNotifierProvider<TimerProvider>(
+          create: (_) => TimerProvider(),
         )
       ],
       child: MaterialApp(
