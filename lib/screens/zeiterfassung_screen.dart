@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,8 @@ class ZeiterfassungScreen extends StatefulWidget {
 
 class _ZeiterfassungScreenState extends State<ZeiterfassungScreen> {
   var timer;
+  // DateTime now = DateTime.now();
+  // dynamic formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
 
   @override
   void initState() {
@@ -36,21 +39,16 @@ class _ZeiterfassungScreenState extends State<ZeiterfassungScreen> {
       builder: (context, timeprovider, widget) {
         return Column(
           children: [
-            SizedBox(
-              height: 25,
-            ),
+            addVerticalSpace(25),
             Center(
               child: Text(
-                '${timer.hour} : ' + '${timer.minute} : ' + '${timer.seconds} ',
+                '${timer.hour}:' + '${timer.minute}:' + '${timer.seconds}',
                 style: TextStyle(
-                  color: Colors.black,
                   fontSize: 40,
                 ),
               ),
             ),
-            SizedBox(
-              height: 25,
-            ),
+            addVerticalSpace(25),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

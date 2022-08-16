@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class TimerProvider with ChangeNotifier {
   Timer? _timer;
@@ -17,6 +18,7 @@ class TimerProvider with ChangeNotifier {
   bool get startEnable => _startEnable;
   bool get stopEnable => _stopEnable;
   bool get continueEnable => _continueEnable;
+  dynamic currentTime;
 
   void startTimer() {
     _hour = 0;
@@ -25,6 +27,7 @@ class TimerProvider with ChangeNotifier {
     _startEnable = false;
     _stopEnable = true;
     _continueEnable = false;
+    currentTime = DateFormat.jm().format(DateTime.now());
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_seconds < 59) {
@@ -43,6 +46,15 @@ class TimerProvider with ChangeNotifier {
     });
   }
 
+  void pauseTimer() {
+    if (_startEnable == false) {
+      _startEnable = true;
+      _continueEnable = true;
+      _stopEnable = false;
+    }
+    notifyListeners();
+  }
+
   void stopTimer() {
     if (_startEnable == false) {
       _startEnable = true;
@@ -58,7 +70,7 @@ class TimerProvider with ChangeNotifier {
     _stopEnable = true;
     _continueEnable = false;
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds < 59) {
         _seconds++;
       } else if (_seconds == 59) {
