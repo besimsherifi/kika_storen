@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:kika_storen/utils/helper_widgets.dart';
-import 'package:provider/provider.dart';
 
 import '../models/menu_items.dart';
-import '../services/authentication_service.dart';
-import '../utils/config.dart';
+import '../widgets/main_screen_drawer.dart';
 import '../widgets/menu_card.dart';
 
 class MainScreen extends StatelessWidget {
@@ -21,23 +17,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kika Storen'),
       ),
-      drawer: Drawer(
-          child: Column(
-        children: [
-          addVerticalSpace(90),
-          TextButton(
-              onPressed: () {
-                currentTheme.switchTheme();
-              },
-              child:
-                  currentTheme.isDark ? Icon(Iconsax.sun) : Icon(Iconsax.moon)),
-          TextButton(
-              onPressed: () {
-                context.read<AuthenticationService>().singOut();
-              },
-              child: Icon(Iconsax.logout))
-        ],
-      )),
+      drawer: const MainScreenDrawer(),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsetsDirectional.only(top: 20),
