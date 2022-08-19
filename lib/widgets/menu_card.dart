@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kika_storen/screens/zeiterfassung_screen.dart';
-import 'package:provider/provider.dart';
-
-import '../services/authentication_service.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({Key? key, required this.icon, required this.text})
@@ -16,7 +12,6 @@ class MenuCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed('/$text-screen');
-        // print('/$text-screen');
       },
       child: Card(
         margin: const EdgeInsets.all(15),
