@@ -83,7 +83,7 @@ class _ZeiterfassungScreenState extends State<ZeiterfassungScreen> {
             ),
             addVerticalSpace(40),
             CheckboxListTile(
-              title: Text("Automaticher Stop nach 8 Stunden"), //    <-- label
+              title: Text("Automaticher Start und Stop"), //    <-- label
               value: false,
               onChanged: (newValue) {},
             ),

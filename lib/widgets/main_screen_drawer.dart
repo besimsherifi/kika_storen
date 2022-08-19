@@ -40,31 +40,54 @@ class MainDrawerClock extends StatelessWidget {
   Widget build(BuildContext context) {
     final timer = Provider.of<TimerProvider>(context);
     return Container(
-      padding: EdgeInsets.all(20),
-      color: Colors.red,
+      // color: Colors.red,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          timer.currentTime != null ? Text(timer.currentTime) : Text(''),
-          GestureDetector(
-            child: Icon(
-              timer.startEnable ? Iconsax.play : Iconsax.pause,
-            ),
-            onTap: () {
-              print(timer.currentTime);
-              if (timer.startEnable) {
-                timer.continueTimer();
-              } else {
-                timer.stopTimer();
-              }
-            },
+          Column(
+            children: [
+              GestureDetector(
+                child: Icon(
+                  timer.startEnable
+                      ? Iconsax.play_circle
+                      : Iconsax.pause_circle,
+                  size: 40,
+                ),
+                onTap: () {
+                  print(timer.currentTime);
+                  if (timer.startEnable) {
+                    timer.continueTimer();
+                  } else {
+                    timer.stopTimer();
+                  }
+                },
+              ),
+            ],
           ),
           addHorizontalSpace(10),
-          Text(timer.hour.toString()),
-          addHorizontalSpace(20),
-          Text(timer.minute.toString()),
-          addHorizontalSpace(20),
-          Text(timer.seconds.toString()),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  timer.currentTime != null
+                      ? Text('ARBEIT GEANFANGT AM ${timer.currentTime}')
+                      : Text(''),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(timer.hour.toString()),
+                  Text(':'),
+                  Text(timer.minute.toString()),
+                  Text(':'),
+                  Text(timer.seconds.toString()),
+                ],
+              )
+            ],
+          ),
         ],
       ),
     );
