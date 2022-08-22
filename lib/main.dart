@@ -5,7 +5,7 @@ import 'package:kika_storen/providers/timer_provider.dart';
 import 'package:kika_storen/screens/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
-import 'package:kika_storen/screens/kontakten_screen.dart';
+import 'package:kika_storen/screens/Contacts/kontakten_screen.dart';
 import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/screens/projekten_screen.dart';
 import 'package:kika_storen/screens/termine_screen.dart';
