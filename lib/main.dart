@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
+import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/screens/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
@@ -61,14 +62,16 @@ class _MyAppState extends State<MyApp> {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: currentTheme.currentTheme(),
-        home: AuthenticationWrapper(),
+        home: const AuthenticationWrapper(),
         routes: {
-          ZeiterfassungScreen.routeName: (context) => ZeiterfassungScreen(),
-          TermineScreen.routeName: (context) => TermineScreen(),
-          AufgabenScreen.routeName: (context) => AufgabenScreen(),
-          ProjektenScreen.routeName: (context) => ProjektenScreen(),
-          KontaktenScreen.routeName: (context) => KontaktenScreen(),
-          FormularenScreen.routeName: (context) => FormularenScreen(),
+          ZeiterfassungScreen.routeName: (context) =>
+              const ZeiterfassungScreen(),
+          TermineScreen.routeName: (context) => const TermineScreen(),
+          AufgabenScreen.routeName: (context) => const AufgabenScreen(),
+          ProjektenScreen.routeName: (context) => const ProjektenScreen(),
+          KontaktenScreen.routeName: (context) => const KontaktenScreen(),
+          FormularenScreen.routeName: (context) => const FormularenScreen(),
+          AddContactScreen.routeName: (context) => const AddContactScreen(),
         },
       ),
     );
@@ -76,12 +79,14 @@ class _MyAppState extends State<MyApp> {
 }
 
 class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
     if (firebaseUser != null) {
       return MainScreen();
     }
-    return AuthScreen();
+    return const AuthScreen();
   }
 }

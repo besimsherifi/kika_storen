@@ -12,3 +12,5 @@ class ContactsListScreen extends StatelessWidget {
     );
   }
 }
+
+//TODO shajfe pse duhet tkiesh ene kontakten screen po ene kontaken list

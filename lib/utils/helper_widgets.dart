@@ -11,3 +11,15 @@ Widget addHorizontalSpace(double width) {
     width: width,
   );
 }
+
+Widget contactInputs(String name) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: TextFormField(
+      decoration: InputDecoration(
+        border: const UnderlineInputBorder(),
+        labelText: name,
+      ),
+    ),
+  );
+}
