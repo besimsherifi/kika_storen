@@ -7,9 +7,14 @@ import '../services/authentication_service.dart';
 import '../utils/config.dart';
 import '../utils/helper_widgets.dart';
 
-class MainScreenDrawer extends StatelessWidget {
+class MainScreenDrawer extends StatefulWidget {
   const MainScreenDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<MainScreenDrawer> createState() => _MainScreenDrawerState();
+}
+
+class _MainScreenDrawerState extends State<MainScreenDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,6 +24,7 @@ class MainScreenDrawer extends StatelessWidget {
         TextButton(
             onPressed: () {
               currentTheme.switchTheme();
+              setState(() {});
             },
             child: currentTheme.isDark
                 ? const Icon(Iconsax.sun)
