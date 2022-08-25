@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/contact.dart';
 import '../../utils/helper_widgets.dart';
 
 class AddContactScreen extends StatefulWidget {
@@ -23,13 +27,18 @@ class _AddContactScreenState extends State<AddContactScreen> {
   }
 
   String selectedValue = 'Intern';
+  final controllerName = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Neuer Kontakt'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            addVerticalSpace(60),
+            addVerticalSpace(10),
             DropdownButton(
               value: selectedValue,
               icon: const Icon(Icons.keyboard_arrow_down),
@@ -40,34 +49,31 @@ class _AddContactScreenState extends State<AddContactScreen> {
                 });
               },
             ),
-            contactInputs('Name'),
-            if (selectedValue != "Intern") contactInputs('Firma'),
-            if (selectedValue == "Lieferant")
-              contactInputs('Lieferanten-Nummer'),
-            if (selectedValue == "Lieferant")
-              contactInputs('Unsere Kunden-Nummer'),
-            if (selectedValue == "Kunden") contactInputs('Kunden-Nummer'),
-            contactInputs('Strasse'),
-            contactInputs('PLZ'),
-            contactInputs('Ort'),
-            contactInputs('Telefon'),
-            contactInputs('Mobil'),
-            contactInputs('E-Mail'),
+            contactInputs('Name', controllerName),
+            // if (selectedValue != "Intern") contactInputs('Firma'),
+            // if (selectedValue == "Lieferant")
+            //   contactInputs('Lieferanten-Nummer'),
+            // if (selectedValue == "Lieferant")
+            //   contactInputs('Unsere Kunden-Nummer'),
+            // if (selectedValue == "Kunden") contactInputs('Kunden-Nummer'),
+            // contactInputs('Strasse'),
+            // contactInputs('PLZ'),
+            // contactInputs('Ort'),
+            // contactInputs('Telefon'),
+            // contactInputs('Mobil'),
+            // contactInputs('E-Mail'),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    final contact = Contact(controllerName.text);
+                    createContact(contact);
+                    print(contact);
+                    // Navigator.pop(context);
                   },
                   child: const Text('Spiechern'),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Abbrechen'),
-                )
               ],
             )
           ],
@@ -75,4 +81,12 @@ class _AddContactScreenState extends State<AddContactScreen> {
       ),
     );
   }
+}
+
+Future createContact(Contact contact) async {
+  final docContact = FirebaseFirestore.instance
+      .collection('/contacts/xisVa0yhhSlqGwEY67te/Intern/XWP6FkInOW2c15af7ZTX')
+      .doc();
+  final json = jsonEncode(contact);
+  // await docContact.set(json);
 }
