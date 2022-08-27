@@ -29,7 +29,7 @@ class TimerProvider with ChangeNotifier {
     _continueEnable = false;
     currentTime = DateFormat.jm().format(DateTime.now());
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds < 59) {
         _seconds++;
       } else if (_seconds == 59) {

@@ -12,13 +12,14 @@ Widget addHorizontalSpace(double width) {
   );
 }
 
-Widget contactInputs(String name) {
+Widget contactInputs(String value, TextEditingController controllerValue) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
     child: TextFormField(
+      controller: controllerValue,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        labelText: name,
+        labelText: value,
       ),
     ),
   );
