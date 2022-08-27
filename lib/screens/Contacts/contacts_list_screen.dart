@@ -13,14 +13,22 @@ class ContactsListScreen extends StatefulWidget {
 }
 
 class _ContactsListScreenState extends State<ContactsListScreen> {
-  final Stream<QuerySnapshot> contacts =
-      FirebaseFirestore.instance.collection('users').snapshots();
+  final contacts = FirebaseFirestore.instance
+      .collection('test')
+      .doc('zVDTxxrQTWPBh90B6EYa')
+      .collection('Intern')
+      .snapshots();
+  dynamic data;
 
   @override
   void initState() {
-    // print(contacts);
     super.initState();
-    // readUsers();
+    readUsers();
+  }
+
+  readUsers() async {
+    var db = FirebaseFirestore.instance.collection('test');
+    data = db.doc('Extern').snapshots();
   }
 
   @override
@@ -40,9 +48,9 @@ class _ContactsListScreenState extends State<ContactsListScreen> {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
+            print(data);
             return ListTile(
               title: Text(data['name']),
-              subtitle: Text('company'),
             );
           }).toList(),
         );
@@ -53,15 +61,4 @@ class _ContactsListScreenState extends State<ContactsListScreen> {
 
 //TODO shajfe pse duhet tkiesh ene kontakten screen po ene kontaken list
 
-readUsers() async {
-  // var data = await FirebaseFirestore.instance
-  //     .collection('users')
-  //     .snapshots()
-  //     .map((snapshot) {
-  //   print(snapshot.docs.length);
-  // });
 
-  Stream collectionStream =
-      FirebaseFirestore.instance.collection('users').snapshots();
-  print(collectionStream);
-}
