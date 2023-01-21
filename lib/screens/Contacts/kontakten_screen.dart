@@ -32,7 +32,7 @@ class _KontaktenScreenState extends State<KontaktenScreen> {
           ),
           title: const Text('Kontakten'),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             ContactsListScreen('Intern'),
             ContactsListScreen('Extern'),
