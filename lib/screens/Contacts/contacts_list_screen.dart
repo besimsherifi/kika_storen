@@ -1,20 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kika_storen/providers/contact_provider.dart';
+import 'package:provider/provider.dart';
+import '../../services/firestore_service.dart';
 
 class ContactsListScreen extends StatelessWidget {
-  const ContactsListScreen(this.contact, {Key? key}) : super(key: key);
+  ContactsListScreen(this.category, {Key? key}) : super(key: key);
 
-  final String contact;
+  final String category;
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
-    final contacts = FirebaseFirestore.instance
-        .collection('contacts')
-        .doc('G7zz3UnSiNJpqUpWJyF1')
-        .collection(contact)
-        .snapshots();
+    final contact = Provider.of<ContactProvider>(context, listen: false);
+    contact.contactCategory = category;
+
+    // final contacts =
     return StreamBuilder<QuerySnapshot>(
-      stream: contacts,
+      stream: firestoreService.getContacts(category),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -28,8 +31,14 @@ class ContactsListScreen extends StatelessWidget {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
-            return ListTile(
-              title: Text(data['name']),
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed('/Add-contact-screen', arguments: data);
+              },
+              child: ListTile(
+                title: Text(data['name']),
+              ),
             );
           }).toList(),
         );
@@ -39,5 +48,3 @@ class ContactsListScreen extends StatelessWidget {
 }
 
 //TODO shajfe pse duhet tkiesh ene kontakten screen po ene kontaken list
-
-

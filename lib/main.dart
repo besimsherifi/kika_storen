@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
 import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/screens/aufgaben_screen.dart';
@@ -54,7 +55,10 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider<TimerProvider>(
           create: (_) => TimerProvider(),
-        )
+        ),
+        ChangeNotifierProvider<ContactProvider>(
+          create: (_) => ContactProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
