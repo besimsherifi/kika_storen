@@ -15,7 +15,6 @@ class ContactsListScreen extends StatelessWidget {
     final contact = Provider.of<ContactProvider>(context, listen: false);
     contact.contactCategory = category;
 
-    // final contacts =
     return StreamBuilder<QuerySnapshot>(
       stream: firestoreService.getContacts(category),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -33,6 +32,7 @@ class ContactsListScreen extends StatelessWidget {
                 document.data()! as Map<String, dynamic>;
             return GestureDetector(
               onTap: () {
+                print(data);
                 Navigator.of(context)
                     .pushNamed('/Add-contact-screen', arguments: data);
               },

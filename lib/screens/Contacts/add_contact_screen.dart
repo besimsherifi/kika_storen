@@ -26,11 +26,17 @@ class _AddContactScreenState extends State<AddContactScreen> {
     return menuItems;
   }
 
-  String category = 'Intern';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = FirebaseFirestore.instance;
   final firestoreService = FirestoreService();
   var edit = false;
+  // String category = '';
+
+  @override
+  void didChangeDependencies() {
+    final contact = Provider.of<ContactProvider>(context, listen: false);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +44,20 @@ class _AddContactScreenState extends State<AddContactScreen> {
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
     final nameController = TextEditingController(text: routeArgs?['name']);
+    final strasseController =
+        TextEditingController(text: routeArgs?['strasse']);
+    final firmaController = TextEditingController(text: routeArgs?['firma']);
+    final lieferantenNrController =
+        TextEditingController(text: routeArgs?['lieferantenNr']);
+    final kundennNrController =
+        TextEditingController(text: routeArgs?['kundenNr']);
+    final plzController = TextEditingController(text: routeArgs?['plz']);
+    final ortController = TextEditingController(text: routeArgs?['ort']);
+    final mobilController = TextEditingController(text: routeArgs?['mobil']);
+    final emailController = TextEditingController(text: routeArgs?['email']);
+    final telefonController =
+        TextEditingController(text: routeArgs?['telefon']);
+
     if (routeArgs == null) {
       edit = true;
     }
@@ -52,44 +72,79 @@ class _AddContactScreenState extends State<AddContactScreen> {
           child: Column(
             children: [
               addVerticalSpace(10),
-              edit
-                  ? DropdownButton(
-                      value: category,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items: dropdownItems,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          category = newValue!;
-                        });
-                      },
-                    )
-                  : Text(''),
-              // contactInputs('Name'),
-              // if (category != "Intern") contactInputs('Firma'),
-              // if (category == "Lieferant")
-              //   contactInputs('Lieferanten-Nummer'),
-              // if (category == "Lieferant")
-              //   contactInputs('Unsere Kunden-Nummer'),
-              // if (category == "Kunden") contactInputs('Kunden-Nummer'),
-              // contactInputs('Strasse'),
-              // contactInputs('PLZ'),
-              // contactInputs('Ort'),
-              // contactInputs('Telefon'),
-              // contactInputs('Mobil'),
-              // contactInputs('E-Mail'),
-
+              // edit
+              //     ? DropdownButton(
+              //         value: contact.contactCategory,
+              //         icon: const Icon(Icons.keyboard_arrow_down),
+              //         items: dropdownItems,
+              //         onChanged: (String? newValue) {
+              //           setState(() {
+              //             category = newValue!;
+              //           });
+              //         },
+              //       )
+              //     : const Text(''),
               TextFormField(
                 controller: nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+              ),
+              TextFormField(
+                controller: strasseController,
+                decoration: const InputDecoration(labelText: "Strasse"),
+              ),
+              if (contact.contactCategory != "Intern")
+                TextFormField(
+                  controller: firmaController,
+                  decoration: const InputDecoration(labelText: "Firma"),
+                ),
+              if (contact.contactCategory == "Lieferanten")
+                TextFormField(
+                  controller: lieferantenNrController,
+                  decoration:
+                      const InputDecoration(labelText: "Lieferanten-Nummer"),
+                ),
+              if (contact.contactCategory == "Kunden")
+                TextFormField(
+                  controller: kundennNrController,
+                  decoration: const InputDecoration(labelText: "Kunden-Nummer"),
+                ),
+              TextFormField(
+                controller: plzController,
+                decoration: const InputDecoration(labelText: "PLZ"),
+              ),
+              TextFormField(
+                controller: ortController,
+                decoration: const InputDecoration(labelText: "Ort"),
+              ),
+              TextFormField(
+                controller: telefonController,
+                decoration: const InputDecoration(labelText: "Telefon"),
+              ),
+              TextFormField(
+                controller: mobilController,
+                decoration: const InputDecoration(labelText: "Mobil"),
+              ),
+              TextFormField(
+                controller: emailController,
+                decoration: const InputDecoration(labelText: "e-Mail"),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
-                      firestoreService.addContact(
-                          nameController.text, category);
-                      // addContact(nameController.text);
-
+                      firestoreService.createContact(
+                          category: contact.contactCategory,
+                          name: nameController.text,
+                          strasse: strasseController.text,
+                          firma: firmaController.text,
+                          lieferantenNr: lieferantenNrController.text,
+                          kundenNr: kundennNrController.text,
+                          plz: plzController.text,
+                          ort: ortController.text,
+                          telefon: telefonController.text,
+                          mobil: mobilController.text,
+                          email: emailController.text);
                       // Navigator.pop(context);
                     },
                     child: const Text('Spiechern'),
@@ -97,20 +152,35 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   TextButton(
                       onPressed: () {
                         // editMode = true;
-                        // final docUser = db
-                        //     .collection('contacts')
-                        //     .doc('G7zz3UnSiNJpqUpWJyF1')
-                        //     .collection('Intern')
-                        //     .doc('Re5IQ9826zG2CaTx1v14');
-                        // docUser.update({'name': 'O lesh'});
+                        firestoreService.updateContact(
+                            id: routeArgs?['id'],
+                            category: contact.contactCategory,
+                            name: nameController.text,
+                            strasse: strasseController.text,
+                            firma: firmaController.text,
+                            lieferantenNr: lieferantenNrController.text,
+                            kundenNr: kundennNrController.text,
+                            plz: plzController.text,
+                            ort: ortController.text,
+                            telefon: telefonController.text,
+                            mobil: mobilController.text,
+                            email: emailController.text);
                         // print(docUser);
 
                         // print(object)
                         // print(nameController.text);
-                        // print(category);
                         print(contact.contactCategory);
+                        print(routeArgs?['id']);
+                        // print(contact.contactCategory);
                       },
-                      child: const Text('Berbaiten'))
+                      child: const Text('Berbaiten')),
+                  TextButton(
+                      onPressed: () {
+                        firestoreService.deleteContact(
+                            id: routeArgs?['id'],
+                            category: contact.contactCategory);
+                      },
+                      child: Text('Loschen'))
                 ],
               )
             ],

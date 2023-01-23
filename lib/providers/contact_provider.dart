@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-class ContactProvider with ChangeNotifier {
+class ContactProvider extends ChangeNotifier {
   String contactCategory = '';
 }
