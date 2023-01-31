@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
 import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
+import 'package:kika_storen/screens/Contacts/contact_detail_screen.dart';
 import 'package:kika_storen/screens/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
@@ -76,6 +77,8 @@ class _MyAppState extends State<MyApp> {
           KontaktenScreen.routeName: (context) => const KontaktenScreen(),
           FormularenScreen.routeName: (context) => const FormularenScreen(),
           AddContactScreen.routeName: (context) => const AddContactScreen(),
+          ContactDetailScreen.routeName: (context) =>
+              const ContactDetailScreen()
         },
       ),
     );

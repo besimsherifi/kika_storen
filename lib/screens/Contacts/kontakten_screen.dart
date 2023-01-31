@@ -23,6 +23,7 @@ class _KontaktenScreenState extends State<KontaktenScreen> {
       child: Scaffold(
         appBar: AppBar(
           bottom: const TabBar(
+            labelPadding: EdgeInsets.all(0),
             tabs: [
               Tab(text: 'Intern'),
               Tab(text: 'Extern'),
