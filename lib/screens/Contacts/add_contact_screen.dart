@@ -26,23 +26,18 @@ class _AddContactScreenState extends State<AddContactScreen> {
     return menuItems;
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = FirebaseFirestore.instance;
   final firestoreService = FirestoreService();
-  var edit = false;
-  // String category = '';
-
-  @override
-  void didChangeDependencies() {
-    final contact = Provider.of<ContactProvider>(context, listen: false);
-    super.didChangeDependencies();
-  }
+  var editMode = true;
 
   @override
   Widget build(BuildContext context) {
     final contact = Provider.of<ContactProvider>(context, listen: false);
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
+    if (routeArgs == null) {
+      editMode = false;
+    }
     final nameController = TextEditingController(text: routeArgs?['name']);
     final strasseController =
         TextEditingController(text: routeArgs?['strasse']);
@@ -58,100 +53,54 @@ class _AddContactScreenState extends State<AddContactScreen> {
     final telefonController =
         TextEditingController(text: routeArgs?['telefon']);
 
-    if (routeArgs == null) {
-      edit = true;
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: edit ? const Text('Neuer Kontakt') : const Text('Berbaiten'),
+        title: editMode ? const Text('Berbaiten') : const Text('Neuer Kontakt'),
       ),
       body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 40),
           child: Column(
             children: [
               addVerticalSpace(10),
-              // edit
-              //     ? DropdownButton(
-              //         value: contact.contactCategory,
-              //         icon: const Icon(Icons.keyboard_arrow_down),
-              //         items: dropdownItems,
-              //         onChanged: (String? newValue) {
-              //           setState(() {
-              //             category = newValue!;
-              //           });
-              //         },
-              //       )
-              //     : const Text(''),
-              TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: "Name"),
+              const Icon(
+                Icons.contact_page_outlined,
+                size: 60,
               ),
-              TextFormField(
-                controller: strasseController,
-                decoration: const InputDecoration(labelText: "Strasse"),
-              ),
-              if (contact.contactCategory != "Intern")
-                TextFormField(
-                  controller: firmaController,
-                  decoration: const InputDecoration(labelText: "Firma"),
-                ),
+              contactInputs("Name", nameController),
+              contactInputs("Strasse", strasseController),
+              if (contact.contactCategory != 'Intern')
+                contactInputs("Firma", firmaController),
               if (contact.contactCategory == "Lieferanten")
-                TextFormField(
-                  controller: lieferantenNrController,
-                  decoration:
-                      const InputDecoration(labelText: "Lieferanten-Nummer"),
-                ),
+                contactInputs("Lieferanten-Nummer", lieferantenNrController),
               if (contact.contactCategory == "Kunden")
-                TextFormField(
-                  controller: kundennNrController,
-                  decoration: const InputDecoration(labelText: "Kunden-Nummer"),
-                ),
-              TextFormField(
-                controller: plzController,
-                decoration: const InputDecoration(labelText: "PLZ"),
-              ),
-              TextFormField(
-                controller: ortController,
-                decoration: const InputDecoration(labelText: "Ort"),
-              ),
-              TextFormField(
-                controller: telefonController,
-                decoration: const InputDecoration(labelText: "Telefon"),
-              ),
-              TextFormField(
-                controller: mobilController,
-                decoration: const InputDecoration(labelText: "Mobil"),
-              ),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: "e-Mail"),
-              ),
+                contactInputs("Kunden-Nummer", kundennNrController),
+              contactInputs("PLZ", plzController),
+              contactInputs("Ort", ortController),
+              contactInputs("e-Mail", emailController),
+              contactInputs("Mobil", mobilController),
+              contactInputs("Telefon", telefonController),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
-                      firestoreService.createContact(
-                          category: contact.contactCategory,
-                          name: nameController.text,
-                          strasse: strasseController.text,
-                          firma: firmaController.text,
-                          lieferantenNr: lieferantenNrController.text,
-                          kundenNr: kundennNrController.text,
-                          plz: plzController.text,
-                          ort: ortController.text,
-                          telefon: telefonController.text,
-                          mobil: mobilController.text,
-                          email: emailController.text);
-                      // Navigator.pop(context);
-                    },
-                    child: const Text('Spiechern'),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        // editMode = true;
+                      if (!editMode) {
+                        firestoreService.createContact(
+                            category: contact.contactCategory,
+                            name: nameController.text,
+                            strasse: strasseController.text,
+                            firma: firmaController.text,
+                            lieferantenNr: lieferantenNrController.text,
+                            kundenNr: kundennNrController.text,
+                            plz: plzController.text,
+                            ort: ortController.text,
+                            telefon: telefonController.text,
+                            mobil: mobilController.text,
+                            email: emailController.text);
+                        showToast("Kontakt erfolgreich hinzugefügt");
+                        Navigator.pop(context);
+                      } else {
                         firestoreService.updateContact(
                             id: routeArgs?['id'],
                             category: contact.contactCategory,
@@ -165,24 +114,26 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             telefon: telefonController.text,
                             mobil: mobilController.text,
                             email: emailController.text);
-                        // print(docUser);
-
-                        // print(object)
-                        // print(nameController.text);
-                        print(contact.contactCategory);
-                        print(routeArgs?['id']);
-                        // print(contact.contactCategory);
-                      },
-                      child: const Text('Berbaiten')),
-                  TextButton(
-                      onPressed: () {
-                        firestoreService.deleteContact(
-                            id: routeArgs?['id'],
-                            category: contact.contactCategory);
-                      },
-                      child: Text('Loschen'))
+                        showToast("Kontakt erfolgreich bearbeitet");
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: const Text('Spiechern'),
+                  ),
+                  if (editMode)
+                    TextButton(
+                        onPressed: () {
+                          firestoreService.deleteContact(
+                              id: routeArgs?['id'],
+                              category: contact.contactCategory);
+                          showToast("Kontakt erfolgreich gelöscht");
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Löschen')),
                 ],
-              )
+              ),
             ],
           ),
         ),
