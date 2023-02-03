@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kika_storen/widgets/button.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/contact_provider.dart';
@@ -26,9 +26,9 @@ class _AddContactScreenState extends State<AddContactScreen> {
     return menuItems;
   }
 
-  final db = FirebaseFirestore.instance;
   final firestoreService = FirestoreService();
   var editMode = true;
+  bool activeBttn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,47 +83,57 @@ class _AddContactScreenState extends State<AddContactScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      if (!editMode) {
-                        firestoreService.createContact(
-                            category: contact.contactCategory,
-                            name: nameController.text,
-                            strasse: strasseController.text,
-                            firma: firmaController.text,
-                            lieferantenNr: lieferantenNrController.text,
-                            kundenNr: kundennNrController.text,
-                            plz: plzController.text,
-                            ort: ortController.text,
-                            telefon: telefonController.text,
-                            mobil: mobilController.text,
-                            email: emailController.text);
-                        showToast("Kontakt erfolgreich hinzugefügt");
-                        Navigator.pop(context);
-                      } else {
-                        firestoreService.updateContact(
-                            id: routeArgs?['id'],
-                            category: contact.contactCategory,
-                            name: nameController.text,
-                            strasse: strasseController.text,
-                            firma: firmaController.text,
-                            lieferantenNr: lieferantenNrController.text,
-                            kundenNr: kundennNrController.text,
-                            plz: plzController.text,
-                            ort: ortController.text,
-                            telefon: telefonController.text,
-                            mobil: mobilController.text,
-                            email: emailController.text);
-                        showToast("Kontakt erfolgreich bearbeitet");
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      }
+                  ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: nameController,
+                    builder: (context, value, child) {
+                      return Button(
+                        label: 'Spiechern',
+                        onTap: value.text.isNotEmpty
+                            ? () {
+                                if (!editMode) {
+                                  firestoreService.createContact(
+                                      category: contact.contactCategory,
+                                      name: nameController.text,
+                                      strasse: strasseController.text,
+                                      firma: firmaController.text,
+                                      lieferantenNr:
+                                          lieferantenNrController.text,
+                                      kundenNr: kundennNrController.text,
+                                      plz: plzController.text,
+                                      ort: ortController.text,
+                                      telefon: telefonController.text,
+                                      mobil: mobilController.text,
+                                      email: emailController.text);
+                                  showToast("Kontakt erfolgreich hinzugefügt");
+                                  Navigator.pop(context);
+                                } else {
+                                  firestoreService.updateContact(
+                                      id: routeArgs?['id'],
+                                      category: contact.contactCategory,
+                                      name: nameController.text,
+                                      strasse: strasseController.text,
+                                      firma: firmaController.text,
+                                      lieferantenNr:
+                                          lieferantenNrController.text,
+                                      kundenNr: kundennNrController.text,
+                                      plz: plzController.text,
+                                      ort: ortController.text,
+                                      telefon: telefonController.text,
+                                      mobil: mobilController.text,
+                                      email: emailController.text);
+                                  showToast("Kontakt erfolgreich bearbeitet");
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            : null,
+                      );
                     },
-                    child: const Text('Spiechern'),
                   ),
+                  addHorizontalSpace(10),
                   if (editMode)
-                    TextButton(
-                        onPressed: () {
+                    Button(
+                        onTap: () {
                           firestoreService.deleteContact(
                               id: routeArgs?['id'],
                               category: contact.contactCategory);
@@ -131,7 +141,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Löschen')),
+                        label: 'Löschen'),
                 ],
               ),
             ],
