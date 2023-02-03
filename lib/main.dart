@@ -3,20 +3,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
+import 'package:kika_storen/screens/Aufgaben/add_aufgaben_screen.dart';
 import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/screens/Contacts/contact_detail_screen.dart';
-import 'package:kika_storen/screens/aufgaben_screen.dart';
+import 'package:kika_storen/screens/Terminen/add_termin_screen.dart';
+import 'package:kika_storen/screens/Aufgaben/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
 import 'package:kika_storen/screens/Contacts/kontakten_screen.dart';
 import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/screens/projekten_screen.dart';
-import 'package:kika_storen/screens/termine_screen.dart';
+import 'package:kika_storen/screens/Terminen/termine_screen.dart';
 import 'package:kika_storen/screens/zeiterfassung_screen.dart';
 import 'package:kika_storen/services/authentication_service.dart';
 import 'package:kika_storen/theme/theme_constants.dart';
 import 'package:kika_storen/utils/config.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'firebase_options.dart';
 
@@ -62,6 +65,11 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+        supportedLocales: const [Locale('de')],
         debugShowCheckedModeBanner: false,
         title: 'Kika Storen',
         theme: lightTheme,
@@ -71,8 +79,10 @@ class _MyAppState extends State<MyApp> {
         routes: {
           ZeiterfassungScreen.routeName: (context) =>
               const ZeiterfassungScreen(),
-          TermineScreen.routeName: (context) => const TermineScreen(),
+          TerminenScreen.routeName: (context) => TerminenScreen(),
+          AddTerminScreen.routeName: (context) => AddTerminScreen(),
           AufgabenScreen.routeName: (context) => const AufgabenScreen(),
+          AddAufgabenScreen.routeName: (context) => const AddAufgabenScreen(),
           ProjektenScreen.routeName: (context) => const ProjektenScreen(),
           KontaktenScreen.routeName: (context) => const KontaktenScreen(),
           FormularenScreen.routeName: (context) => const FormularenScreen(),

@@ -44,6 +44,10 @@ dependencies:
   cloud_firestore: ^3.4.5
   url_launcher: ^6.1.8
   fluttertoast: ^8.1.2
+  date_picker_timeline: ^1.2.3
+  localization: ^2.1.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

@@ -133,7 +133,6 @@ class ContactDetailScreen extends StatelessWidget {
               ContactDetailsOutput('Kunden-Nummer', routeArgs?['kundenNr']),
             ContactDetailsOutput('Strasse', routeArgs?['strasse']),
             ContactDetailsOutput('PLZ', routeArgs?['plz']),
-            ContactDetailsOutput('Strasse', routeArgs?['strasse']),
             ContactDetailsOutput('Ort', routeArgs?['ort']),
             ContactDetailsOutput('Mobil', routeArgs?['mobil']),
             GestureDetector(
