@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kika_storen/models/termin.dart';
 
 import '../models/contacts/contact.dart';
 
@@ -87,5 +86,25 @@ class FirestoreService {
         .collection(category)
         .doc(id);
     docContact.delete();
+  }
+
+  void createAppointment(name, address, date, time, notes) async {
+    final docAppointment = db.collection('appointments').doc();
+    final appointment = Termin(
+        id: docAppointment.id,
+        name: name,
+        address: address,
+        date: date,
+        time: time,
+        notes: notes);
+    final json = appointment.toJson();
+    await docAppointment.set(json);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAppointments(date) {
+    return db
+        .collection('appointments')
+        .where('date', isEqualTo: date)
+        .snapshots();
   }
 }
