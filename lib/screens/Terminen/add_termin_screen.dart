@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
 import 'package:kika_storen/widgets/button.dart';
+
+import '../../services/firestore_service.dart';
 
 class AddTerminScreen extends StatefulWidget {
   const AddTerminScreen({Key? key}) : super(key: key);
@@ -13,6 +16,7 @@ class AddTerminScreen extends StatefulWidget {
 }
 
 class _AddTerminScreenState extends State<AddTerminScreen> {
+  final firestoreService = FirestoreService();
   final editMode = false;
   DateTime selectedDate = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
@@ -23,9 +27,19 @@ class _AddTerminScreenState extends State<AddTerminScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
+    final formattedTimeOfDay = localizations.formatTimeOfDay(time);
     return Scaffold(
       appBar: AppBar(
         title: editMode ? const Text("Berbaiten") : const Text('Neuer Termin'),
+        actions: [
+          GestureDetector(
+              onTap: () async {},
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.delete),
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
@@ -54,7 +68,6 @@ class _AddTerminScreenState extends State<AddTerminScreen> {
             terminInputs(
                 title: "Datum",
                 hint: DateFormat.yMd().format(selectedDate).toString(),
-                controller: dateController,
                 maxLines: 1,
                 readOnly: true,
                 icon: GestureDetector(
@@ -112,7 +125,19 @@ class _AddTerminScreenState extends State<AddTerminScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Button(label: "Spiechern", onTap: () {}),
+                  Button(
+                      label: "Spiechern",
+                      onTap: () {
+                        firestoreService.createAppointment(
+                            nameController.text,
+                            addresController.text,
+                            DateFormat.yMd().format(selectedDate).toString(),
+                            // selectedDate,
+                            formattedTimeOfDay,
+                            notesController.text);
+                        print(DateFormat.yMd().format(selectedDate).toString());
+                        print(selectedDate);
+                      }),
                 ],
               ),
             )
