@@ -90,21 +90,48 @@ class FirestoreService {
 
   void createAppointment(name, address, date, time, notes) async {
     final docAppointment = db.collection('appointments').doc();
-    final appointment = Termin(
-        id: docAppointment.id,
-        name: name,
-        address: address,
-        date: date,
-        time: time,
-        notes: notes);
-    final json = appointment.toJson();
-    await docAppointment.set(json);
+    // final appointment = Termin(
+    //     id: docAppointment.id,
+    //     name: name,
+    //     address: address,
+    //     date: date,
+    //     time: time,
+    //     notes: notes);
+    // final json = appointment.toFirestore();
+    // await docAppointment.set(json);
+    await FirebaseFirestore.instance.collection('appointments').add({
+      "name": name,
+      "address": address,
+      "notes": notes,
+      "time": time,
+      "date": Timestamp.fromDate(date),
+    });
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getAppointments(date) {
-    return db
+  void updateAppointment({id, name, address, date, time, notes}) async {
+    await db.collection('appointments').doc(id).update({
+      "name": name,
+      "address": address,
+      "date": Timestamp.fromDate(date),
+      "time": time,
+      "notes": notes
+    });
+  }
+
+  getAppointments() {
+    db
         .collection('appointments')
-        .where('date', isEqualTo: date)
+        .withConverter(
+          fromFirestore: Termin.fromFirestore,
+          toFirestore: (Termin termin, options) => termin.toFirestore(),
+        )
         .snapshots();
   }
+
+  // Stream<QuerySnapshot<Map<String, dynamic>>> getAppointments2(date) {
+  //   return db
+  //       .collection('appointments')
+  //       .where('date', isEqualTo: Timestamp.fromDate(date))
+  //       .snapshots();
+  // }
 }

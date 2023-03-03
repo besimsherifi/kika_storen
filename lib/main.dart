@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
+import 'package:kika_storen/screens/Arbeitsplanung/arbeitsplanung_scree.dart';
 import 'package:kika_storen/screens/Aufgaben/add_aufgaben_screen.dart';
 import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/screens/Contacts/contact_detail_screen.dart';
@@ -12,7 +13,7 @@ import 'package:kika_storen/screens/auth_screen.dart';
 import 'package:kika_storen/screens/formularen_screen.dart';
 import 'package:kika_storen/screens/Contacts/kontakten_screen.dart';
 import 'package:kika_storen/screens/main_screen.dart';
-import 'package:kika_storen/screens/projekten_screen.dart';
+import 'package:kika_storen/screens/Projekten/projekten_screen.dart';
 import 'package:kika_storen/screens/Terminen/termine_screen.dart';
 import 'package:kika_storen/screens/zeiterfassung_screen.dart';
 import 'package:kika_storen/services/authentication_service.dart';
@@ -80,7 +81,8 @@ class _MyAppState extends State<MyApp> {
           ZeiterfassungScreen.routeName: (context) =>
               const ZeiterfassungScreen(),
           TerminenScreen.routeName: (context) => TerminenScreen(),
-          AddTerminScreen.routeName: (context) => AddTerminScreen(),
+          AddTerminScreen.routeName: (context) => const AddTerminScreen(),
+          ArbeitsplanungScreen.routeName: (context) => ArbeitsplanungScreen(),
           AufgabenScreen.routeName: (context) => const AufgabenScreen(),
           AddAufgabenScreen.routeName: (context) => const AddAufgabenScreen(),
           ProjektenScreen.routeName: (context) => const ProjektenScreen(),

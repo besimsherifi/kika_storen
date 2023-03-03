@@ -49,6 +49,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   table_calendar: ^3.0.8
+  flutter_slidable: ^2.0.0
 
 dev_dependencies:
   flutter_test:
