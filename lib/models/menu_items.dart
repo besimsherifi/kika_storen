@@ -29,14 +29,22 @@ class MenuItems {
         ),
       ),
     );
+    // menu.add(
+    //   MenuItems(
+    //     text: "Aufgaben",
+    //     image: const Icon(
+    //       Iconsax.task,
+    //       size: kMainScreenIconsSize,
+    //     ),
+    //   ),
+    // );
     menu.add(
       MenuItems(
-        text: "Aufgaben",
-        image: const Icon(
-          Iconsax.task,
-          size: kMainScreenIconsSize,
-        ),
-      ),
+          text: "Arbeitsplanung",
+          image: const Icon(
+            Iconsax.calendar,
+            size: kMainScreenIconsSize,
+          )),
     );
     menu.add(
       MenuItems(
