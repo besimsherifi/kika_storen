@@ -22,7 +22,6 @@ class _AddTerminScreenState extends State<AddTerminScreen> {
   final addressController = TextEditingController();
   final dateController = TextEditingController();
   final notesController = TextEditingController();
-  bool activeBttn = false;
 
   @override
   Widget build(BuildContext context) {

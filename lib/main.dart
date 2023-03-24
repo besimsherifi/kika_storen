@@ -3,10 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/providers/timer_provider.dart';
-import 'package:kika_storen/screens/Arbeitsplanung/arbeitsplanung_scree.dart';
+import 'package:kika_storen/screens/Arbeitsplanung/arbeitsplanung_screen.dart';
 import 'package:kika_storen/screens/Aufgaben/add_aufgaben_screen.dart';
 import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/screens/Contacts/contact_detail_screen.dart';
+import 'package:kika_storen/screens/Projekten/add_projekt_screen.dart';
+import 'package:kika_storen/screens/Projekten/project_edit_screen.dart';
 import 'package:kika_storen/screens/Terminen/add_termin_screen.dart';
 import 'package:kika_storen/screens/Aufgaben/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
@@ -80,12 +82,16 @@ class _MyAppState extends State<MyApp> {
         routes: {
           ZeiterfassungScreen.routeName: (context) =>
               const ZeiterfassungScreen(),
-          TerminenScreen.routeName: (context) => TerminenScreen(),
+          TerminenScreen.routeName: (context) => const TerminenScreen(),
           AddTerminScreen.routeName: (context) => const AddTerminScreen(),
-          ArbeitsplanungScreen.routeName: (context) => ArbeitsplanungScreen(),
+          ArbeitsplanungScreen.routeName: (context) =>
+              const ArbeitsplanungScreen(),
           AufgabenScreen.routeName: (context) => const AufgabenScreen(),
           AddAufgabenScreen.routeName: (context) => const AddAufgabenScreen(),
-          ProjektenScreen.routeName: (context) => const ProjektenScreen(),
+          ProjektenScreen.routeName: (context) => ProjektenScreen(),
+          // ProjectDetailScreen.routeName: (context) =>
+          //     const ProjectDetailScreen(),
+          AddProjektScreen.routeName: (context) => const AddProjektScreen(),
           KontaktenScreen.routeName: (context) => const KontaktenScreen(),
           FormularenScreen.routeName: (context) => const FormularenScreen(),
           AddContactScreen.routeName: (context) => const AddContactScreen(),
