@@ -137,7 +137,7 @@ class _EditEventState extends State<EditEvent> {
                   onTap: () {
                     _addEvent();
                   },
-                  label: "Spiechern",
+                  label: "Speichern",
                 ),
               ],
             ),

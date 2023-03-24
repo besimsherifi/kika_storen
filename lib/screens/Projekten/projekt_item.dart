@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kika_storen/models/termin.dart';
+import 'package:kika_storen/models/project.dart';
 
-class EventItem extends StatelessWidget {
-  final Termin event;
+class ProjektItem extends StatelessWidget {
+  final Project event;
   final Function() onDelete;
   final Function()? onTap;
-  const EventItem({
+  const ProjektItem({
     Key? key,
     required this.event,
     required this.onDelete,
@@ -48,15 +46,17 @@ class EventItem extends StatelessWidget {
             child: ListTile(
               title: Text(
                 event.name,
+                style: TextStyle(color: Colors.grey[900]),
               ),
               subtitle: Text(
-                event.time,
+                event.address,
+                style: TextStyle(color: Colors.grey[700]),
               ),
               onTap: onTap,
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: onDelete,
-              ),
+              // trailing: IconButton(
+              //   icon: const Icon(Icons.delete),
+              //   onPressed: onDelete,
+              // ),
             ),
           )
         ],

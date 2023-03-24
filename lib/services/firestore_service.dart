@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kika_storen/models/project.dart';
 import 'package:kika_storen/models/termin.dart';
 
 import '../models/contacts/contact.dart';
@@ -134,4 +135,48 @@ class FirestoreService {
   //       .where('date', isEqualTo: Timestamp.fromDate(date))
   //       .snapshots();
   // }
+
+  createProject({name, category, address, startDate, endDate, blinds, notes}) {
+    final docProject = db.collection('projects').doc();
+    final project = Project(
+        id: docProject.id,
+        name: name,
+        address: address,
+        category: category,
+        startDate: startDate,
+        endDate: endDate,
+        blinds: blinds,
+        notes: notes);
+    final json = project.toFirestore();
+    docProject.set(json);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getProjects(category) {
+    return db
+        .collection('projects')
+        .where('category', isEqualTo: category)
+        .snapshots();
+  }
+
+  void updateProject(
+      {id, name, address, category, startDate, endDate, blinds, notes}) {
+    db.collection('projects').doc(id).update({
+      "name": name,
+      "address": address,
+      "category": category,
+      "startDate": Timestamp.fromDate(startDate),
+      "endDate": Timestamp.fromDate(endDate),
+      "blinds": blinds,
+      "notes": notes
+    });
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getProjectById(id) {
+    return db.collection('projects').where('id', isEqualTo: id).snapshots();
+  }
+
+  void deleteProject(id) {
+    final docProject = db.collection('projects').doc(id);
+    docProject.delete();
+  }
 }

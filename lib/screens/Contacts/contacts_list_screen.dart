@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kika_storen/providers/contact_provider.dart';
 import 'package:kika_storen/screens/Contacts/contact_detail_screen.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
@@ -40,13 +41,19 @@ class ContactsListScreen extends StatelessWidget {
                 document.data()! as Map<String, dynamic>;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: Dismissible(
-                key: const Key(''),
-                onDismissed: (direction) {
-                  firestoreService.deleteContact(
-                      id: data['id'], category: contact.contactCategory);
-                  showToast('Kontakt erfolgreich gelöscht');
-                },
+              child: Slidable(
+                endActionPane:
+                    ActionPane(motion: const StretchMotion(), children: [
+                  SlidableAction(
+                    backgroundColor: Colors.red,
+                    onPressed: (context) {
+                      firestoreService.deleteContact(
+                          id: data['id'], category: contact.contactCategory);
+                      showToast('Kontakt erfolgreich gelöscht');
+                    },
+                    icon: Icons.delete,
+                  )
+                ]),
                 child: Row(
                   children: [
                     Column(

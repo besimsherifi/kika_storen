@@ -2,30 +2,29 @@ import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:kika_storen/models/termin.dart';
-import 'package:kika_storen/widgets/button.dart';
+import 'package:kika_storen/models/project.dart';
+import 'package:kika_storen/screens/Projekten/project_detail_screen.dart';
+import 'package:kika_storen/screens/Projekten/projekt_item.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'edit_termin.dart';
-import 'termin_item.dart';
+class ArbeitsplanungScreen extends StatefulWidget {
+  const ArbeitsplanungScreen({Key? key}) : super(key: key);
 
-class TerminenScreen extends StatefulWidget {
-  const TerminenScreen({Key? key}) : super(key: key);
-
-  static const routeName = '/Termine-screen';
+  static const routeName = '/Arbeitsplanung-screen';
 
   @override
-  State<TerminenScreen> createState() => _TerminenScreenState();
+  State<ArbeitsplanungScreen> createState() => _ArbeitsplanungScreenState();
 }
 
-class _TerminenScreenState extends State<TerminenScreen> {
+class _ArbeitsplanungScreenState extends State<ArbeitsplanungScreen> {
   DateTime selectedDate = DateTime.now();
-  CalendarFormat _calendarFormat = CalendarFormat.week;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  late Map<DateTime, List<Termin>> _termine;
+  late Map<DateTime, List<Project>> _termine;
   late Stream<QuerySnapshot> _firestoreEventsStream;
+  // late DateTime _firstDay;
+  // late DateTime _lastDay;
 
   @override
   void initState() {
@@ -48,23 +47,23 @@ class _TerminenScreenState extends State<TerminenScreen> {
 
   _loadFirestoreEvents() async {
     _firestoreEventsStream = FirebaseFirestore.instance
-        .collection('appointments')
+        .collection('projects')
         .withConverter(
-          fromFirestore: Termin.fromFirestore,
-          toFirestore: (Termin termin, options) => termin.toFirestore(),
+          fromFirestore: Project.fromFirestore,
+          toFirestore: (Project project, options) => project.toFirestore(),
         )
         .snapshots();
 
     _firestoreEventsStream.listen((QuerySnapshot snap) {
       _termine.clear();
       for (var doc in snap.docs) {
-        final Termin termin = doc.data() as Termin;
-        final day =
-            DateTime.utc(termin.date.year, termin.date.month, termin.date.day);
+        final Project project = doc.data() as Project;
+        final day = DateTime.utc(project.startDate.year,
+            project.startDate.month, project.startDate.day);
         if (_termine[day] == null) {
           _termine[day] = [];
         }
-        _termine[day]!.add(termin);
+        _termine[day]!.add(project);
       }
       setState(() {});
     });
@@ -73,31 +72,11 @@ class _TerminenScreenState extends State<TerminenScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: AppBar(
+        title: const Text("Arbeitsplanung"),
+      ),
       body: Column(
         children: [
-          addTerminBar(context),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          //   child: DatePicker(
-          //     DateTime.now(),
-          //     height: 100,
-          //     width: 80,
-          //     locale: 'de',
-          //     initialSelectedDate: DateTime.now(),
-          //     selectionColor: kKikaBlueColor,
-          //     dayTextStyle: const TextStyle(color: Colors.grey),
-          //     monthTextStyle: const TextStyle(color: Colors.grey),
-          //     dateTextStyle: const TextStyle(color: Colors.grey, fontSize: 24),
-          //     onDateChange: (date) {
-          //       // print(date);
-          //       var stringDate = date.toString();
-          //       DateTime dateTime = DateTime.parse(stringDate).toUtc();
-          //       _getEventsForTheDay(dateTime);
-          //       // print(dateTime);
-          //     },
-          //   ),
-          // ),
           TableCalendar(
             locale: 'de',
             firstDay: DateTime.utc(2010, 10, 20),
@@ -113,7 +92,6 @@ class _TerminenScreenState extends State<TerminenScreen> {
                 setState(() {
                   _selectedDay = selectedDay;
                   _focusedDay = focusedDay;
-                  // print(selectedDay);
                 });
               }
             },
@@ -134,16 +112,15 @@ class _TerminenScreenState extends State<TerminenScreen> {
               child: ListView(
                 children: _getEventsForTheDay(_focusedDay)
                     .map(
-                      (event) => EventItem(
+                      (event) => ProjektItem(
                           event: event,
                           onTap: () async {
                             final res = await Navigator.push<bool>(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditEvent(
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime.now(),
-                                    event: event),
+                                builder: (_) => ProjectDetailScreen(
+                                  project: event,
+                                ),
                               ),
                             );
                             if (res ?? false) {
@@ -156,22 +133,22 @@ class _TerminenScreenState extends State<TerminenScreen> {
                               builder: (_) => AlertDialog(
                                 title: const Text("Termin Löschen ?"),
                                 content: const Text(
-                                    "Sind Sie sicher, dass Sie löschen möchten ?"),
+                                    "Sind Sie sicher, dass Sie löschen möchten?"),
                                 actions: [
-                                  OutlinedButton(
+                                  TextButton(
                                     onPressed: () =>
                                         Navigator.pop(context, false),
                                     style: TextButton.styleFrom(
-                                        // backgroundColor: Colors.black,
-                                        ),
+                                      backgroundColor: Colors.black,
+                                    ),
                                     child: const Text("Nein"),
                                   ),
-                                  OutlinedButton(
+                                  TextButton(
                                     onPressed: () =>
                                         Navigator.pop(context, true),
                                     style: TextButton.styleFrom(
-                                        // backgroundColor: Colors.red,
-                                        ),
+                                      backgroundColor: Colors.red,
+                                    ),
                                     child: const Text("Ja"),
                                   ),
                                 ],
@@ -179,7 +156,7 @@ class _TerminenScreenState extends State<TerminenScreen> {
                             );
                             if (delete ?? false) {
                               await FirebaseFirestore.instance
-                                  .collection('appointments')
+                                  .collection('projects')
                                   .doc(event.id)
                                   .delete();
                               _loadFirestoreEvents();
@@ -194,39 +171,4 @@ class _TerminenScreenState extends State<TerminenScreen> {
       ),
     );
   }
-}
-
-appBar() {
-  return AppBar(
-    title: const Text('Terminen'),
-  );
-}
-
-addTerminBar(context) {
-  return Container(
-    margin: const EdgeInsets.fromLTRB(20, 10, 10, 20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateFormat.yMMMd().format(DateTime.now()),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-            ),
-            const Text(
-              'Heute',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
-        Button(
-            label: "+ Neues Ereignis",
-            onTap: () {
-              Navigator.of(context).pushNamed('/Add-termin-screen');
-            })
-      ],
-    ),
-  );
 }
