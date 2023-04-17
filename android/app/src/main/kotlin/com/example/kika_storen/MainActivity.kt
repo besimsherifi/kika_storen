@@ -1,4 +1,4 @@
-package com.example.kika_storen
+package com.kikastoren.kikastoren
 
 import io.flutter.embedding.android.FlutterActivity
 

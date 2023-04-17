@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kika_storen/screens/hours_report_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/timer_provider.dart';
@@ -35,7 +36,17 @@ class _MainScreenDrawerState extends State<MainScreenDrawer> {
           },
           child: const Icon(Iconsax.logout),
         ),
-        MainDrawerClock()
+        MainDrawerClock(),
+        // GestureDetector(
+        //   child: Row(
+        //     children: [Text('Mein Raport'), Icon(Icons.calendar_month)],
+        //   ),
+        //   onTap: () {
+        //     Navigator.of(context).push(MaterialPageRoute(
+        //       builder: (_) => HoursReportScreen(),
+        //     ));
+        //   },
+        // )
       ],
     ));
   }
@@ -61,7 +72,6 @@ class MainDrawerClock extends StatelessWidget {
                   size: 40,
                 ),
                 onTap: () {
-                  print(timer.currentTime);
                   if (timer.startEnable) {
                     timer.continueTimer();
                   } else {
@@ -74,14 +84,14 @@ class MainDrawerClock extends StatelessWidget {
           addHorizontalSpace(10),
           Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  timer.currentTime != null
-                      ? Text('ARBEIT GEANFANGT AM ${timer.currentTime}')
-                      : Text(''),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     timer.currentTime != null
+              //         ? Text('ARBEIT GEANFANGT AM ${timer.currentTime}')
+              //         : Text(''),
+              //   ],
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
