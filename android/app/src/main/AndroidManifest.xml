@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kika_storen">
+    package="com.kikastoren.kikastoren">
    <application
-        android:label="kika_storen"
+        android:label="Kika Storen"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

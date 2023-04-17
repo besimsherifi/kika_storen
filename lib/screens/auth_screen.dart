@@ -35,8 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 65),
-                        child:
-                            Image(image: AssetImage('assets/images/logo.png')),
+                        child: Image(image: AssetImage('assets/homeLogo.png')),
                       ),
                       addVerticalSpace(30),
                       Text(
