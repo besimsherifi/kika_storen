@@ -66,7 +66,7 @@ class MenuItems {
     );
     menu.add(
       MenuItems(
-        text: "Formularen",
+        text: "Regierapport",
         image: const Icon(
           Iconsax.document_text_1,
           size: kMainScreenIconsSize,

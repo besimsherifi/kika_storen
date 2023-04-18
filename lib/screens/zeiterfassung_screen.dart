@@ -162,8 +162,8 @@ class _ZeiterfassungScreenState extends State<ZeiterfassungScreen> {
             children: [
               (timer.startEnable)
                   ? ElevatedButton(
-                      // onPressed: timer.startTimer,
-                      onPressed: clockIn,
+                      onPressed: timer.startTimer,
+                      // onPressed: clockIn,
                       child: Text('Start'),
                     )
                   : const ElevatedButton(
