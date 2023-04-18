@@ -12,7 +12,7 @@ import 'package:kika_storen/screens/Projekten/project_edit_screen.dart';
 import 'package:kika_storen/screens/Terminen/add_termin_screen.dart';
 import 'package:kika_storen/screens/Aufgaben/aufgaben_screen.dart';
 import 'package:kika_storen/screens/auth_screen.dart';
-import 'package:kika_storen/screens/formularen_screen.dart';
+import 'package:kika_storen/screens/Formularen/formularen_screen.dart';
 import 'package:kika_storen/screens/Contacts/kontakten_screen.dart';
 import 'package:kika_storen/screens/main_screen.dart';
 import 'package:kika_storen/screens/Projekten/projekten_screen.dart';
@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
           //     const ProjectDetailScreen(),
           AddProjektScreen.routeName: (context) => const AddProjektScreen(),
           KontaktenScreen.routeName: (context) => const KontaktenScreen(),
-          FormularenScreen.routeName: (context) => const FormularenScreen(),
+          FormularenScreen.routeName: (context) => FormularenScreen(),
           AddContactScreen.routeName: (context) => const AddContactScreen(),
           ContactDetailScreen.routeName: (context) =>
               const ContactDetailScreen()
