@@ -37,7 +37,7 @@ class ProjectListScreen extends StatelessWidget {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
+                padding: const EdgeInsets.only(left: 15),
                 child: Slidable(
                   endActionPane:
                       ActionPane(motion: const StretchMotion(), children: [

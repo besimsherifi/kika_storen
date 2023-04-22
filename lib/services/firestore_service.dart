@@ -136,11 +136,13 @@ class FirestoreService {
   //       .snapshots();
   // }
 
-  createProject({name, category, address, startDate, endDate, blinds, notes}) {
+  createProject(
+      {name, category, address, startDate, endDate, blinds, notes, customer}) {
     final docProject = db.collection('projects').doc();
     final project = Project(
         id: docProject.id,
         name: name,
+        customer: customer,
         address: address,
         category: category,
         startDate: startDate,
@@ -159,9 +161,18 @@ class FirestoreService {
   }
 
   void updateProject(
-      {id, name, address, category, startDate, endDate, blinds, notes}) {
+      {id,
+      name,
+      address,
+      category,
+      startDate,
+      endDate,
+      blinds,
+      notes,
+      customer}) {
     db.collection('projects').doc(id).update({
       "name": name,
+      "customer": customer,
       "address": address,
       "category": category,
       "startDate": Timestamp.fromDate(startDate),

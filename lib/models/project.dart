@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 class Project {
   final String id;
   final String name;
+  final String customer;
   final String address;
   final String category;
   final DateTime startDate;
@@ -16,6 +17,7 @@ class Project {
   Project({
     required this.id,
     required this.name,
+    required this.customer,
     required this.address,
     required this.category,
     required this.startDate,
@@ -30,6 +32,7 @@ class Project {
     return Project(
         id: snapshot.id,
         name: data['name'],
+        customer: data['customer'],
         category: data['category'],
         startDate: data['startDate'].toDate(),
         endDate: data['endDate'].toDate(),
@@ -44,6 +47,7 @@ class Project {
       "endDate": Timestamp.fromDate(endDate),
       'id': id,
       'name': name,
+      'customer': customer,
       'category': category,
       'address': address,
       'notes': notes,
@@ -54,6 +58,7 @@ class Project {
   Project copyWith({
     String? id,
     String? name,
+    String? customer,
     String? address,
     String? category,
     DateTime? startDate,
@@ -64,6 +69,7 @@ class Project {
     return Project(
       id: id ?? this.id,
       name: name ?? this.name,
+      customer: customer ?? this.customer,
       address: address ?? this.address,
       category: category ?? this.category,
       startDate: startDate ?? this.startDate,
@@ -89,6 +95,7 @@ class Project {
     return Project(
       id: map['id'] as String,
       name: map['name'] as String,
+      customer: map['customer'] as String,
       address: map['address'] as String,
       category: map['category'] as String,
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate'] as int),

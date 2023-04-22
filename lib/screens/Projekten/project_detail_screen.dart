@@ -61,6 +61,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               ),
             ),
             ContactDetailsOutput('Projekt Typ', widget.project.category),
+            ContactDetailsOutput('Kunde', widget.project.customer),
             ContactDetailsOutput('Fällig', endDate),
             ContactDetailsOutput('Address', widget.project.address),
             ContactDetailsOutput('Notizen', widget.project.notes)

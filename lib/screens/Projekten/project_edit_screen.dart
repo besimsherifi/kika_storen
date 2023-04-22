@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kika_storen/utils/constants.dart';
@@ -24,6 +25,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
   late TextEditingController nameController;
   late TextEditingController addressController;
   late TextEditingController notesController;
+  late String costumer = '';
 
   List<String> categories = ['Montage', 'Reparatur', 'Beratung'];
 
@@ -38,6 +40,22 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
     'Sonnenschirme',
     'Rolllamellen'
   ];
+  List<String> users = [];
+
+  Future<void> fetchUsers() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('contacts')
+        .doc('G7zz3UnSiNJpqUpWJyF1')
+        .collection('Kunden')
+        .get();
+    final List<String> fetchedUsers =
+        querySnapshot.docs.map<String>((doc) => doc['name'] as String).toList();
+    setState(() {
+      users = fetchedUsers;
+      costumer = users[0];
+      costumer = widget.project['customer'];
+    });
+  }
 
   String selectedCategory = 'Montage';
 
@@ -45,6 +63,7 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
 
   @override
   void initState() {
+    fetchUsers();
     nameController = TextEditingController(text: widget.project['name']);
     selectedCategory = widget.project['category'];
     startDate = widget.project['startDate'].toDate();
@@ -76,6 +95,46 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
                     Icons.abc,
                     color: Colors.grey,
                   )),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 3.0,
+                      ),
+                      child: Text('Name des Kunden'),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: DropdownButton(
+                    isExpanded: true,
+                    underline: const SizedBox(),
+                    items: users
+                        .map((user) => DropdownMenuItem<String>(
+                              value: user,
+                              child: Text(
+                                user,
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ))
+                        .toList(),
+                    value: costumer,
+                    onChanged: (String? value) {
+                      setState(() {
+                        costumer = value!;
+                      });
+                    }),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 3.0, top: 10),
                 child: Row(
@@ -320,7 +379,8 @@ class _ProjectEditScreenState extends State<ProjectEditScreen> {
                                           startDate: startDate,
                                           endDate: endDate,
                                           blinds: columnsData,
-                                          notes: notesController.text);
+                                          notes: notesController.text,
+                                          customer: costumer);
                                       showToast(
                                           'Termin erfolgreich bearbeitet');
                                       Navigator.pop(context);

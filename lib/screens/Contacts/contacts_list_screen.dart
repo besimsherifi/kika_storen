@@ -40,7 +40,7 @@ class ContactsListScreen extends StatelessWidget {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
+              padding: const EdgeInsets.only(left: 15),
               child: Slidable(
                 endActionPane:
                     ActionPane(motion: const StretchMotion(), children: [
@@ -80,7 +80,10 @@ class ContactsListScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
-                          child: const Icon(Icons.call),
+                          child: const Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(Icons.call),
+                          ),
                           onTap: () async {
                             final Uri url =
                                 Uri(scheme: 'tel', path: data['mobil']);

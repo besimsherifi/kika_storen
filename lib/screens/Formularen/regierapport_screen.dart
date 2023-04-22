@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:intl/intl.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
 import 'package:pdf/pdf.dart';
@@ -72,7 +71,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Neues Regierapport'),
+        title: const Text('Neues Regierapport'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -176,7 +175,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 5.0),
+                    padding: EdgeInsets.only(left: 5.0, top: 5),
                     child: Text('Zimmerart'),
                   ),
                   Container(
@@ -213,7 +212,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 5.0),
+                    padding: EdgeInsets.only(left: 5.0, top: 5),
                     child: Text('Licht Art'),
                   ),
                   Container(
@@ -250,7 +249,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 5.0),
+                    padding: EdgeInsets.only(left: 5.0, top: 5),
                     child: Text('Antrieb'),
                   ),
                   Container(
@@ -291,29 +290,27 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
               addVerticalSpace(10),
               Row(
                 children: [
-                  Text('Demontage'),
+                  const Text('Demontage'),
                   Radio(
                     value: true,
                     groupValue: demontage,
                     onChanged: (value) {
                       setState(() {
                         demontage = true;
-                        print(demontage);
                       });
                     },
                   ),
-                  Text('Ja'),
+                  const Text('Ja'),
                   Radio(
                     value: false,
                     groupValue: demontage,
                     onChanged: (value) {
                       setState(() {
                         demontage = false;
-                        print(demontage);
                       });
                     },
                   ),
-                  Text('Nein'),
+                  const Text('Nein'),
                 ],
               ),
               demontage
@@ -357,7 +354,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
               addVerticalSpace(10),
               Row(
                 children: [
-                  Text('Fertig verrechnen'),
+                  const Text('Fertig verrechnen'),
                   Radio(
                     value: 'Ja',
                     groupValue: fertigVerechnen,
@@ -367,7 +364,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                       });
                     },
                   ),
-                  Text('Ja'),
+                  const Text('Ja'),
                   Radio(
                     value: 'Nein',
                     groupValue: fertigVerechnen,
@@ -377,7 +374,7 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                       });
                     },
                   ),
-                  Text('Nein'),
+                  const Text('Nein'),
                   Radio(
                     value: 'Garantie',
                     groupValue: fertigVerechnen,
@@ -387,35 +384,43 @@ class _RegieRapportScreenState extends State<RegieRapportScreen> {
                       });
                     },
                   ),
-                  Text('Garantie'),
+                  const Text('Garantie'),
                 ],
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    _displayPdf(
-                      context,
-                      rapportController.text,
-                      auftragsNrController.text,
-                      auftraggeberController.text,
-                      rechnungsadresseController.text,
-                      bauobjektController.text,
-                      datumKundenTermin,
-                      produktetyp,
-                      zimmerart,
-                      lichtart,
-                      antrieb,
-                      arbeitsbeschreibController.text,
-                      demontage,
-                      demontageNr.text,
-                      montageNr.text,
-                      materialVerbrauchController.text,
-                      monteurController.text,
-                      fertigVerechnen,
-                      arbeitszeitController.text,
-                      fahrzeitController.text,
-                    );
-                  },
-                  child: Text('Print'))
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 80),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          _displayPdf(
+                            context,
+                            rapportController.text,
+                            auftragsNrController.text,
+                            auftraggeberController.text,
+                            rechnungsadresseController.text,
+                            bauobjektController.text,
+                            datumKundenTermin,
+                            produktetyp,
+                            zimmerart,
+                            lichtart,
+                            antrieb,
+                            arbeitsbeschreibController.text,
+                            demontage,
+                            demontageNr.text,
+                            montageNr.text,
+                            materialVerbrauchController.text,
+                            monteurController.text,
+                            fertigVerechnen,
+                            arbeitszeitController.text,
+                            fahrzeitController.text,
+                          );
+                        },
+                        child: const Text('Drucken')),
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -1264,10 +1269,10 @@ class PreviewScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_outlined),
+          icon: const Icon(Icons.arrow_back_outlined),
         ),
         centerTitle: true,
-        title: Text("Preview"),
+        title: const Text("Vorschau"),
       ),
       body: PdfPreview(
         build: (format) => doc.save(),

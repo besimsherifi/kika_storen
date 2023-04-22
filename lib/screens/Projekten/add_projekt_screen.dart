@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kika_storen/screens/Contacts/add_contact_screen.dart';
 import 'package:kika_storen/utils/helper_widgets.dart';
 import 'package:kika_storen/widgets/button.dart';
 
@@ -45,10 +47,28 @@ class _AddProjektState extends State<AddProjektScreen> {
   ];
 
   String selectedCategory = 'Montage';
+  String selectedUser = '';
   List<Map<String, dynamic>> columnsData = [];
+
+  List<String> users = [];
+
+  Future<void> fetchUsers() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('contacts')
+        .doc('G7zz3UnSiNJpqUpWJyF1')
+        .collection('Kunden')
+        .get();
+    final List<String> fetchedUsers =
+        querySnapshot.docs.map<String>((doc) => doc['name'] as String).toList();
+    setState(() {
+      users = fetchedUsers;
+      selectedUser = users[0];
+    });
+  }
 
   @override
   void initState() {
+    fetchUsers();
     columnsData.add({
       'selectedBlind': 'Sonnenstoren',
       'width': '',
@@ -67,6 +87,7 @@ class _AddProjektState extends State<AddProjektScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               terminInputs(
                   title: "Name des Projekt",
@@ -78,6 +99,46 @@ class _AddProjektState extends State<AddProjektScreen> {
                     Icons.abc,
                     color: Colors.grey,
                   )),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 3.0,
+                      ),
+                      child: Text('Name des Kunden'),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: DropdownButton(
+                    isExpanded: true,
+                    underline: const SizedBox(),
+                    items: users
+                        .map((user) => DropdownMenuItem<String>(
+                              value: user,
+                              child: Text(
+                                user,
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedUser,
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedUser = value!;
+                      });
+                    }),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 3.0, top: 10),
                 child: Row(
@@ -313,6 +374,7 @@ class _AddProjektState extends State<AddProjektScreen> {
                                 ? () {
                                     firestoreService.createProject(
                                         name: nameController.text,
+                                        customer: selectedUser,
                                         category: selectedCategory,
                                         address: addressController.text,
                                         startDate: startDate,
